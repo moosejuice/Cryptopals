@@ -1,44 +1,8 @@
-#include <iostream>
-#include <string>
-#include <deque>
-#include <bitset>
-#include <map>
-#include <vector>
+#include "HexToBase64.h"
 
 using namespace std;
 
-deque<char> HexToBinary(vector<char>);
-deque<char> BinaryToBase64(deque<char>);
-vector<char> StringToVector(string);
-
-int main()
-{
-
-	string hexString;
-	deque<char> BinaryQue, base64;
-	cout << "Input a hex number: ";
-	cin >> hexString;
-
-	BinaryQue = HexToBinary(StringToVector(hexString));
-	base64 = BinaryToBase64(BinaryQue);
-	
-	//cout << "Outputed binary value: ";
-	//for(unsigned i = 0; i < BinaryQue.size(); i++)
-	//	cout << BinaryQue.at(i);
-	//
-	//cout << endl;
-
-	cout << "Base64 value: ";
-	for(unsigned i = 0; i < base64.size(); i++)
-		cout << base64.at(i);
-
-	cout << endl;
-	return 0;
-	
-}
-
-
-deque<char> HexToBinary(vector<char> HexVector)
+std::deque<char> conversions::HexToBinary(std::vector<char> HexVector)
 {
 	deque<char> BinQue;
 	char HexChar;
@@ -70,18 +34,7 @@ deque<char> HexToBinary(vector<char> HexVector)
 	return BinQue;
 }
 
-
-vector<char> StringToVector(string inString)
-{
-	vector<char> returnVector;
-
-	for(unsigned int i = 0; i < inString.length(); i++)
-		returnVector.push_back(inString[i]);
-
-	return returnVector;
-}
-
-deque<char> BinaryToBase64(deque<char> BinaryQue)
+std::deque<char> conversions::BinaryToBase64(std::deque<char> BinaryQue)
 {
 	map<string, char> BinToBase64;
 	map<string, char>::iterator it;
@@ -125,8 +78,23 @@ deque<char> BinaryToBase64(deque<char> BinaryQue)
 	}
 
 	return Base64;
-
 }
 
+std::vector<char> conversions::StringToVector(std::string inString)
+{
+	vector<char> returnVector;
 
+	for(unsigned int i = 0; i < inString.length(); i++)
+		returnVector.push_back(inString[i]);
+
+	return returnVector;
+}
+
+void conversions::PrintDeque(std::deque<char> theQue)
+{
+	for(unsigned i = 0; i < theQue.size(); i++)
+		cout << theQue.at(i);
+
+	cout << endl;
+}
 
