@@ -66,7 +66,7 @@ float cipher::languageScore(std::deque<char> input)
 	KnownFrequency['u']=2.758; KnownFrequency['m']=2.406;KnownFrequency['w']=2.360;KnownFrequency['f']=2.228;
 	KnownFrequency['g']=2.015; KnownFrequency['y']=1.974;KnownFrequency['b']=1.492;KnownFrequency['k']=0.772;
 	KnownFrequency['p']=1.929; KnownFrequency['v']=0.978;KnownFrequency['j']=0.153;KnownFrequency['x']=0.150;
-	KnownFrequency['q']=0.095; KnownFrequency['z']=0.074;KnownFrequency[' ']=20.000;
+	KnownFrequency['q']=0.095; KnownFrequency['z']=0.074;KnownFrequency[' ']=16.667;
 
 	chiSquared = 0;
 	other = nonAscii = spaces = 0;
