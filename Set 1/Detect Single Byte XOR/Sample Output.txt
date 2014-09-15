@@ -1,8 +1,8 @@
-chris@Hydra:~/CS435/Cryptopals/Set 1/DetectSingleByteXOR$ ./a.out
+F:\Documents\Chris\My Documents\Visual Studio 2012\Projects\DetectSingleCharacterXOR\DetectSingleCharacterXOR\Release>DetectSingleCharacterXOR.exe
 Opening file
 Decoding input file 3% 6% 9% 12% 15% 18% 21% 24% 27% 30% 33% 36% 39% 42% 45% 48% 51% 55% 58% 61% 64% 67% 70% 73% 76% 79% 82% 85% 88% 91% 94% 97%
-Most likely line to be encoded is 171 with the cipher 5 and a language score of 134.106
+Most likely line to be encoded is 171 with the cipher 5 and a language score of 127.441
 The string this cipher produces is:
 Now that the party is jumping
 
-Detection algorithm took 5.4 seconds
+Detection algorithm took 2.565 seconds
