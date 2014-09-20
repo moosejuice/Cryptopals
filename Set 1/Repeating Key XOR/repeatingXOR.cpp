@@ -8,14 +8,16 @@ using namespace std;
 
 int main()
 {	
-	string input, cipher;
+	string input, cipher, inputfile;
 	stringstream ss;
 	int choice;
 
-	cout << "Choose a mode, 1 For string input (Ascii), "
-						<<	"2 For string input (hex), "
-						<<	"3 to encrypt entire file, "
-						<<	"4 to read file contents (Ascii) ";
+	cout << "All screen dumps are hex\n";
+	cout << "Choose a mode:\n1 For string input (Ascii)\n"
+						<<	"2 For string input (hex)\n"
+						<<	"3 to encrypt entire file\n"
+						<<	"4 to read file contents (Ascii)\n"
+						<<	"5 to decrypt entire file: ";
 
 	getline(cin, input);
 	ss << input;
@@ -37,7 +39,7 @@ int main()
 		string inputHex;
 		cout << "Enter input string in HEX: ";
 		getline(cin, inputHex);
-		int offset = 0;
+		unsigned int offset = 0;
 		unsigned int buffer;
 		while (offset < inputHex.length() )
 		{
@@ -51,14 +53,21 @@ int main()
 		cout << "Enter the cipher: ";
 		getline(cin, cipher);
 	}
-	else if( choice == 3 )
+	else if( choice == 3 || choice == 5 )
 	{
-		cout << "NOT COMPLETE" << endl;
-		return 0;
+		cout << "Enter the file to read: ";
+		getline(cin, inputfile);
+
+		cout << "Enter the cipher: ";
+		getline(cin, cipher);
+
+		ifstream t(inputfile, ios::binary);
+		input.assign((istreambuf_iterator<char>(t)),
+			istreambuf_iterator<char>());
+		t.close();
 	}
 	else if( choice == 4 )
 	{
-		string inputfile;
 		cout << "Enter the file to read: ";
 		getline(cin, inputfile);
 
@@ -68,18 +77,44 @@ int main()
 		ifstream t(inputfile);
 		input.assign((istreambuf_iterator<char>(t)),
 			istreambuf_iterator<char>());
-	}
-	
-	ss.str(""); ss.clear();
-
-	ss << std::hex << std::setfill('0') << std::noskipws;
-	for(int i = 0; i < input.size(); i++)
-	{	
-		cout << input[i];
-		ss << std::setw(2) << (unsigned int)( input[i] ^ cipher[i%cipher.size()] );
+		t.close();
 	}
 
-	cout << ss.str() << endl;
+	if( choice == 4 || choice == 2 || choice == 1)
+	{
+		ss.str(""); ss.clear();
+		ss << std::hex << std::setfill('0') << std::noskipws;
+		for(unsigned int i = 0; i < input.size(); i++)
+			ss << std::setw(2) << (unsigned int)( input[i] ^ cipher[i%cipher.size()] );
+		cout << ss.str() << endl;
+	}
+	else
+	{
+		string outputfile;
+		if( choice == 3 )
+		{
+			outputfile = inputfile + ".enc";
+			cout << "Writing to " << outputfile;
+		}
+		else
+		{
+			size_t end = inputfile.find(".enc");
+			if( end == string::npos )
+			{
+				cout << "Invalid file\n";
+				return 0;
+			}
+			outputfile = inputfile.substr(0, end);
+			cout << "Writing to " << outputfile;
+		}
 
-return 0;
+		ofstream out(outputfile, ios::binary);
+		for(unsigned int i = 0; i < input.size(); i++)
+			out << (unsigned char)( input[i] ^ cipher[i%cipher.size()] );
+		
+		remove(inputfile.c_str());
+	}
+
+	cout << endl;
+	return 0;
 }
